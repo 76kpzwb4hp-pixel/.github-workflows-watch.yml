@@ -15,7 +15,7 @@ concurrency:
 jobs:
   watch:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
 
@@ -25,6 +25,10 @@ jobs:
           cache: pip
 
       - run: pip install -r requirements.txt
+
+      # Headless browser, only used by the script if the plain HTML
+      # doesn't contain all listings
+      - run: python -m playwright install --with-deps chromium
 
       - name: Check Kereby
         env:
